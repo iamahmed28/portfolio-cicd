@@ -17,7 +17,7 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 bat 'docker stop portfolio-container || exit 0'
-                sh 'docker rm portfolio-container || true'
+                bat 'docker rm portfolio-container || true'
             }
         }
 
