@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/iamahmed28/portfolio-cicd.git'
+                git branch: 'main',
+                    url: 'https://github.com/iamahmed28/portfolio-cicd.git'
             }
         }
 
@@ -16,16 +17,17 @@ pipeline {
 
         stage('Stop Old Container') {
             steps {
-                bat 'docker stop portfolio-container || exit 0'
-                bat 'docker rm portfolio-container || true'
+                bat '''
+                docker stop portfolio-container || echo "No container to stop"
+                docker rm portfolio-container || echo "No container to remove"
+                '''
             }
         }
 
         stage('Run New Container') {
-    steps {
-        bat 'docker run -d -p 8081:80 --name portfolio-container portfolio-site'
-    }
-}
-
+            steps {
+                bat 'docker run -d -p 8081:80 --name portfolio-container portfolio-site'
+            }
+        }
     }
 }
