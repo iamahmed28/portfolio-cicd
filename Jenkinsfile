@@ -10,20 +10,20 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t portfolio-site .'
+                bat 'docker build -t portfolio-site .'
             }
         }
 
         stage('Stop Old Container') {
             steps {
-                sh 'docker stop portfolio-container || true'
+                bat 'docker stop portfolio-container || exit 0'
                 sh 'docker rm portfolio-container || true'
             }
         }
 
         stage('Run New Container') {
             steps {
-                sh 'docker run -d -p 8081:80 --name portfolio-container portfolio-site'
+                bat 'docker run -d -p 3000:3000 --name portfolio-container portfolio-app'
             }
         }
     }
