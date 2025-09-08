@@ -18,8 +18,15 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 bat '''
-                docker stop portfolio-container || echo "No container to stop"
-                docker rm portfolio-container || echo "No container to remove"
+                docker ps -q -f name=portfolio-container > tmp.txt
+                set /p CID=<tmp.txt
+                if not "%CID%"=="" (
+                    docker stop portfolio-container
+                    docker rm portfolio-container
+                ) else (
+                    echo "No container to stop or remove"
+                )
+                del tmp.txt
                 '''
             }
         }
