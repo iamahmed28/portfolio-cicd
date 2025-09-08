@@ -22,9 +22,10 @@ pipeline {
         }
 
         stage('Run New Container') {
-            steps {
-                bat 'docker run -d -p 3000:3000 --name portfolio-container portfolio-app'
-            }
-        }
+    steps {
+        bat 'docker run -d -p 8081:80 --name portfolio-container portfolio-site'
+    }
+}
+
     }
 }
